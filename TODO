@@ -1,0 +1,9 @@
+-Drop down menu or something for selecting noise
+-Change sliders?
+-Make piecewise and uninterpolated look good
+-Turbulence Noise
+	See http://cgkit.sourceforge.net/doc/noise.html
+-Worley Noise
+-Worleyish noise, but linearly interpolated between nearest two.
+	Must fade out influence of 2nd closest to 0 when 3rd - 2nd is close to 0, for a smooth transition.
+-Other non-lattice noises
