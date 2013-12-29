@@ -2,13 +2,13 @@ package NoiseMakers;
 
 public class LinearInterpolatedNoiseMaker extends NoiseMaker {
 	
-	public LinearInterpolatedNoiseMaker(int seed,int c1,int c2,int c3,int c4) {
-		super(seed,c1,c2,c3,c4);
+	public LinearInterpolatedNoiseMaker(long seed) {
+		super(seed);
 	}
 	
 	@Override
 	public double get(double x) {
-		return values[(int) x]*(1-(int) x+x)+values[(int) x+1]*((int) x-x);
+		return (super.get(x+1)-super.get(x))*(x-(int) x)+super.get(x);
 	}
 	
 }

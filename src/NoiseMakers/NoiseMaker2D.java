@@ -1,43 +1,32 @@
 package NoiseMakers;
+
+import java.util.Random;
+
 public abstract class NoiseMaker2D {
-	public final int SEED,C1,C2,C3,C4,C5,C6,C7,C8;
-	protected int[] values;
+	public final long SEED;
+	public static final int RANDRANGE=0x400000;
+	private int[] values;
 	
-	public NoiseMaker2D(int seed,int c1,int c2,int c3,int c4,int c5,int c6,int c7,int c8) {
+	public NoiseMaker2D(long seed) {
 		SEED=seed;
-		C1=c1;
-		C2=c2;
-		C3=c3;
-		C4=c4;
-		C5=c5;
-		C6=c6;
-		C7=c7;
-		C8=c8;
-		populate();
-	}
-	
-	public abstract double get(double x,double y);
-	
-	public int rand1(int x) {
-		return (x*C1+C2)*C3+C4&4194303;
-	}
-	
-	public int rand2(int y) {
-		return (y*C5+C6)*C7+C8&4194303;
-	}
-	
-	public void populate() {
-		values=new int[4194304];
-		int cur=SEED;
-		for (int i=0;i<4194304;i++) {
-			values[i]=cur=rand1(cur);
+		
+		//Force uniform distribution by having every number
+		values=new int[RANDRANGE];
+		for (int i=0;i<RANDRANGE;i++)
+			values[i]=i;
+		
+		//Shuffle the array
+		Random gen=new Random(seed);
+		int t,r;
+		for (int i=0;i<RANDRANGE;i++) {
+			t=values[i];
+			r=gen.nextInt(RANDRANGE);
+			values[i]=values[r];
+			values[r]=t;
 		}
 	}
 	
-	public int getValue(int x,int y) {
-		int cur=values[x];
-		for (int i=0;i<y;i++)
-			cur=rand2(cur);
-		return cur;
+	public double get(double x,double y) {
+		return (double) values[(values[(int) x%RANDRANGE]+(int) y)%RANDRANGE]/(RANDRANGE-1); // [0, 1)
 	}
 }

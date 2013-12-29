@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import NoiseMakers.NoiseMaker;
+import NoiseMakers.AvolioNoiseMaker;
 import NoiseMakers.NoiseMaker2D;
 
 @SuppressWarnings("serial")
@@ -22,7 +23,7 @@ public class SwitchableNoisePanel extends NoisePanel {
 		is2D=false;
 		setXRange(xRange);
 		setYRange(yRange);
-		yScale1D=200/8388608.;
+		yScale1D=1;
 		image=refreshImage();
 	}
 	
@@ -67,6 +68,13 @@ public class SwitchableNoisePanel extends NoisePanel {
 					g.drawLine(x,(int) (n1.get(x*xScale)*yScale1D/yScale),x+1,(int) (n1.get((x+1)*xScale)*yScale1D/yScale));
 					g.drawLine(x,(int) (n1.get(x*xScale)*yScale1D/yScale),x-1,(int) (n1.get((x-1)*xScale)*yScale1D/yScale));
 				}
+				if (n1 instanceof AvolioNoiseMaker) {
+					g.setColor(Color.GREEN);
+					for (int x=1;x<w-1;x++) {
+						g.drawLine(x,(int) (((AvolioNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x+1,(int) (((AvolioNoiseMaker) n1).getDepth((x+1)*xScale)*yScale1D/yScale));
+						g.drawLine(x,(int) (((AvolioNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x-1,(int) (((AvolioNoiseMaker) n1).getDepth((x-1)*xScale)*yScale1D/yScale));
+					}
+				}
 			}
 			return i;
 		} else { //2-Dimensional
@@ -75,7 +83,7 @@ public class SwitchableNoisePanel extends NoisePanel {
 				int c,i=0;
 				for (int y=0;y<h;y++) {
 					for (int x=0;x<w;x++) {
-						c=(int) (n2.get(x*xScale,y*yScale)/16384);
+						c=(int) (n2.get(x*xScale,y*yScale)*255); //Convert to 8-bit unsigned int
 						map[i++]=255<<24|c<<16|c<<8|c;
 					}
 				}

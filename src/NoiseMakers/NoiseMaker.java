@@ -1,27 +1,32 @@
 package NoiseMakers;
+
+import java.util.Random;
+
 public abstract class NoiseMaker {
-	public final int SEED,C1,C2,C3,C4;
-	protected int[] values;
+	public final long SEED;
+	public static final int RANDRANGE=0x400000;
+	private int[] values;
 	
-	public NoiseMaker(int seed,int c1,int c2,int c3,int c4) {
+	public NoiseMaker(long seed) {
 		SEED=seed;
-		C1=c1;
-		C2=c2;
-		C3=c3;
-		C4=c4;
-		populate();
+		
+		//Force uniform distribution by having every number
+		values=new int[RANDRANGE];
+		for (int i=0;i<RANDRANGE;i++)
+			values[i]=i;
+		
+		//Shuffle the array
+		Random gen=new Random(seed);
+		int t,r;
+		for (int i=0;i<RANDRANGE;i++) {
+			t=values[i];
+			r=gen.nextInt(RANDRANGE);
+			values[i]=values[r];
+			values[r]=t;
+		}
 	}
 	
-	public abstract double get(double x);
-	
-	public int rand(int x) {
-		return (x*C1+C2)*C3+C4&4194303;
-	}
-	
-	public void populate() {
-		values=new int[4194304];
-		int cur=SEED;
-		for (int i=0;i<4194304;i++)
-			values[i]=cur=rand(cur);
+	public double get(double x) {
+		return (double) values[(int) x%RANDRANGE]/(RANDRANGE-1); // [0, 1)
 	}
 }

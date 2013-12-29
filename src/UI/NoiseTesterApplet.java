@@ -6,24 +6,14 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.ButtonGroup;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import NoiseMakers.AvolioNoiseMaker;
-import NoiseMakers.AvolioNoiseMaker2D;
-import NoiseMakers.CosineInterpolatedNoiseMaker;
-import NoiseMakers.CosineInterpolatedNoiseMaker2D;
-import NoiseMakers.DoublePerlinNoiseMaker;
-import NoiseMakers.DoublePerlinNoiseMaker2D;
-import NoiseMakers.LinearInterpolatedNoiseMaker;
-import NoiseMakers.LinearInterpolatedNoiseMaker2D;
-import NoiseMakers.NonInterpolatedNoiseMaker;
-import NoiseMakers.NonInterpolatedNoiseMaker2D;
-import NoiseMakers.PerlinNoiseMaker;
-import NoiseMakers.PerlinNoiseMaker2D;
+import NoiseMakers.*;
 
 @SuppressWarnings("serial")
 public class NoiseTesterApplet extends JApplet implements ChangeListener,ActionListener {
@@ -74,26 +64,26 @@ public class NoiseTesterApplet extends JApplet implements ChangeListener,ActionL
 		this.add(yRange,cons);
 		
 		//RadioButtons
-		int[] s= {93,2904,412,301};
-		int[][] c= { {193,211,307,149}, {7309,7541,7753,7237}, {15739,14281,15271,15817}, {26497,27997,25633,27259}};
+		Random generator=new Random();
+		long seed0=generator.nextLong(),seed1=generator.nextLong();
 		
 		group=new ButtonGroup();
 		JPanel buttonPanel=new JPanel(new GridLayout(4,3));
 		buttons=new NoiseMakerButton[12];
 		
-		buttons[0]=new NoiseMaker1DButton("Uninterpolated Noise",new NonInterpolatedNoiseMaker(s[0],c[0][0],c[1][0],c[2][0],c[3][0]));
-		buttons[1]=new NoiseMaker1DButton("Linear-Interpolated Noise",new LinearInterpolatedNoiseMaker(s[0],c[0][0],c[1][0],c[2][0],c[3][0]));
-		buttons[2]=new NoiseMaker1DButton("Cosine-Interpolated Noise",new CosineInterpolatedNoiseMaker(s[0],c[0][0],c[1][0],c[2][0],c[3][0]));
-		buttons[3]=new NoiseMaker1DButton("Perlin Noise, Persistence 5",new PerlinNoiseMaker(s[0],c[0][0],c[1][0],c[2][0],c[3][0],5));
-		buttons[4]=new NoiseMaker1DButton("Perlin Noise, Persistence 3.5",new DoublePerlinNoiseMaker(s[0],c[0][0],c[1][0],c[2][0],c[3][0],3.5));
-		buttons[5]=new NoiseMaker1DButton("Avolio Noise",new AvolioNoiseMaker(s[0],c[0][0],c[1][0],c[2][0],c[3][0],5,new CosineInterpolatedNoiseMaker(s[1],c[0][1],c[1][1],c[2][1],c[3][1])));
+		buttons[0]=new NoiseMaker1DButton("Uninterpolated Noise",new NonInterpolatedNoiseMaker(seed0));
+		buttons[1]=new NoiseMaker1DButton("Linear-Interpolated Noise",new LinearInterpolatedNoiseMaker(seed0));
+		buttons[2]=new NoiseMaker1DButton("Cosine-Interpolated Noise",new CosineInterpolatedNoiseMaker(seed0));
+		buttons[3]=new NoiseMaker1DButton("Perlin Noise, Persistence 5",new PerlinNoiseMaker(seed0,5));
+		buttons[4]=new NoiseMaker1DButton("Perlin Noise, Persistence 3.5",new DoublePerlinNoiseMaker(seed0,3.5));
+		buttons[5]=new NoiseMaker1DButton("Avolio Noise",new AvolioNoiseMaker(seed0,5,5,new CosineInterpolatedNoiseMaker(seed1)));
 		
-		buttons[6]=new NoiseMaker2DButton("2D Uninterpolated Noise",new NonInterpolatedNoiseMaker2D(s[0],c[0][0],c[1][0],c[2][0],c[3][0],c[0][1],c[1][1],c[2][1],c[3][1]));
-		buttons[7]=new NoiseMaker2DButton("2D Linear-Interpolated Noise",new LinearInterpolatedNoiseMaker2D(s[0],c[0][0],c[1][0],c[2][0],c[3][0],c[0][1],c[1][1],c[2][1],c[3][1]));
-		buttons[8]=new NoiseMaker2DButton("2D Cosine-Interpolated Noise",new CosineInterpolatedNoiseMaker2D(s[0],c[0][0],c[1][0],c[2][0],c[3][0],c[0][1],c[1][1],c[2][1],c[3][1]));
-		buttons[9]=new NoiseMaker2DButton("2D Perlin Noise, Persistence 4",new PerlinNoiseMaker2D(s[0],c[0][0],c[1][0],c[2][0],c[3][0],c[0][1],c[1][1],c[2][1],c[3][1],4));
-		buttons[10]=new NoiseMaker2DButton("2D Perlin Noise, Persistence 3.5",new DoublePerlinNoiseMaker2D(s[0],c[0][0],c[1][0],c[2][0],c[3][0],c[0][1],c[1][1],c[2][1],c[3][1],3.5));
-		buttons[11]=new NoiseMaker2DButton("2D Avolio Noise",new AvolioNoiseMaker2D(s[0],c[0][0],c[1][0],c[2][0],c[3][0],c[0][1],c[1][1],c[2][1],c[3][1],8,new CosineInterpolatedNoiseMaker2D(s[1],c[0][2],c[1][2],c[2][2],c[3][2],c[0][3],c[1][3],c[2][3],c[3][3])));
+		buttons[6]=new NoiseMaker2DButton("2D Uninterpolated Noise",new NonInterpolatedNoiseMaker2D(seed0));
+		buttons[7]=new NoiseMaker2DButton("2D Linear-Interpolated Noise",new LinearInterpolatedNoiseMaker2D(seed0));
+		buttons[8]=new NoiseMaker2DButton("2D Cosine-Interpolated Noise",new CosineInterpolatedNoiseMaker2D(seed0));
+		buttons[9]=new NoiseMaker2DButton("2D Perlin Noise, Persistence 4",new PerlinNoiseMaker2D(seed0,4));
+		buttons[10]=new NoiseMaker2DButton("2D Perlin Noise, Persistence 3.5",new DoublePerlinNoiseMaker2D(seed0,3.5));
+		buttons[11]=new NoiseMaker2DButton("2D Avolio Noise",new AvolioNoiseMaker2D(seed0,8,5,new CosineInterpolatedNoiseMaker2D(seed1)));
 		
 		for (int i=0;i<buttons.length;i++) {
 			buttons[i].addActionListener(this);

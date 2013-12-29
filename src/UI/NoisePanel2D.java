@@ -27,7 +27,7 @@ public class NoisePanel2D extends NoisePanel {
 			for (int x1=0;x1<w;x1++) {
 				//c=(int) ((n1.get(x1*xScale)+n2.get((x1^y1)*yScale))/zScale);
 				//c=(int) ((n1.get((x1^y1)*xScale)+n2.get((x1^y1)*yScale))/zScale);
-				c=(int) (n.get(x1*xScale,y1*yScale)/16384);
+				c=(int) (n.get(x1*xScale,y1*yScale)*255);
 				page.setColor(new Color(c,c,c));
 				page.fillRect(x1,y1,1,1);
 			}
