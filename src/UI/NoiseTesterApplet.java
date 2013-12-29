@@ -69,21 +69,21 @@ public class NoiseTesterApplet extends JApplet implements ChangeListener,ActionL
 		
 		group=new ButtonGroup();
 		JPanel buttonPanel=new JPanel(new GridLayout(4,3));
-		buttons=new NoiseMakerButton[12];
-		
-		buttons[0]=new NoiseMaker1DButton("Uninterpolated Noise",new NonInterpolatedNoiseMaker(seed0));
-		buttons[1]=new NoiseMaker1DButton("Linear-Interpolated Noise",new LinearInterpolatedNoiseMaker(seed0));
-		buttons[2]=new NoiseMaker1DButton("Cosine-Interpolated Noise",new CosineInterpolatedNoiseMaker(seed0));
-		buttons[3]=new NoiseMaker1DButton("Perlin Noise, Persistence 5",new PerlinNoiseMaker(seed0,5));
-		buttons[4]=new NoiseMaker1DButton("Perlin Noise, Persistence 3.5",new DoublePerlinNoiseMaker(seed0,3.5));
-		buttons[5]=new NoiseMaker1DButton("Avolio Noise",new AvolioNoiseMaker(seed0,5,5,new CosineInterpolatedNoiseMaker(seed1)));
-		
-		buttons[6]=new NoiseMaker2DButton("2D Uninterpolated Noise",new NonInterpolatedNoiseMaker2D(seed0));
-		buttons[7]=new NoiseMaker2DButton("2D Linear-Interpolated Noise",new LinearInterpolatedNoiseMaker2D(seed0));
-		buttons[8]=new NoiseMaker2DButton("2D Cosine-Interpolated Noise",new CosineInterpolatedNoiseMaker2D(seed0));
-		buttons[9]=new NoiseMaker2DButton("2D Perlin Noise, Persistence 4",new PerlinNoiseMaker2D(seed0,4));
-		buttons[10]=new NoiseMaker2DButton("2D Perlin Noise, Persistence 3.5",new DoublePerlinNoiseMaker2D(seed0,3.5));
-		buttons[11]=new NoiseMaker2DButton("2D Avolio Noise",new AvolioNoiseMaker2D(seed0,8,5,new CosineInterpolatedNoiseMaker2D(seed1)));
+		buttons=new NoiseMakerButton[] {
+			new NoiseMaker1DButton("PI Noise",new PiecewiseInterpolatedIntegerLatticeValueNoiseMaker(new IntegerLatticeValueNoiseMaker(seed0))),
+			new NoiseMaker1DButton("LI Noise",new LinearInterpolatedIntegerLatticeValueNoiseMaker(new IntegerLatticeValueNoiseMaker(seed0))),
+			new NoiseMaker1DButton("CI Noise",new CosineInterpolatedIntegerLatticeValueNoiseMaker(new IntegerLatticeValueNoiseMaker(seed0))),
+			new NoiseMaker1DButton("SS Noise, O = 5",new SpectralSynthesisNoiseMaker(new CosineInterpolatedIntegerLatticeValueNoiseMaker(new IntegerLatticeValueNoiseMaker(seed0)),5)),
+			new NoiseMaker1DButton("POSS Noise, O = 3.5",new PartialOctaveSpectralSynthesisNoiseMaker(new CosineInterpolatedIntegerLatticeValueNoiseMaker(new IntegerLatticeValueNoiseMaker(seed0)),3.5)),
+			new NoiseMaker1DButton("VOSS Noise, O <= 5",new VariableOctaveSpectralSynthesisNoiseMaker(new CosineInterpolatedIntegerLatticeValueNoiseMaker(new IntegerLatticeValueNoiseMaker(seed0)),new CosineInterpolatedIntegerLatticeValueNoiseMaker(new IntegerLatticeValueNoiseMaker(seed1)),5,5)),
+			
+			new NoiseMaker2DButton("2D PI Noise",new PiecewiseInterpolatedIntegerLatticeValueNoiseMaker2D(new IntegerLatticeValueNoiseMaker2D(seed0))),
+			new NoiseMaker2DButton("2D LI Noise",new LinearInterpolatedIntegerLatticeValueNoiseMaker2D(new IntegerLatticeValueNoiseMaker2D(seed0))),
+			new NoiseMaker2DButton("2D CI Noise",new CosineInterpolatedIntegerLatticeValueNoiseMaker2D(new IntegerLatticeValueNoiseMaker2D(seed0))),
+			new NoiseMaker2DButton("2D SS Noise, O = 4",new SpectralSynthesisNoiseMaker2D(new CosineInterpolatedIntegerLatticeValueNoiseMaker2D(new IntegerLatticeValueNoiseMaker2D(seed0)),4)),
+			new NoiseMaker2DButton("2D POSS Noise, O = 3.5",new PartialOctaveSpectralSynthesisNoiseMaker2D(new CosineInterpolatedIntegerLatticeValueNoiseMaker2D(new IntegerLatticeValueNoiseMaker2D(seed0)),3.5)),
+			new NoiseMaker2DButton("2D VOSS Noise, O <= 8",new VariableOctaveSpectralSynthesisNoiseMaker2D(new CosineInterpolatedIntegerLatticeValueNoiseMaker2D(new IntegerLatticeValueNoiseMaker2D(seed0)),new CosineInterpolatedIntegerLatticeValueNoiseMaker2D(new IntegerLatticeValueNoiseMaker2D(seed1)),8,5))
+		};
 		
 		for (int i=0;i<buttons.length;i++) {
 			buttons[i].addActionListener(this);

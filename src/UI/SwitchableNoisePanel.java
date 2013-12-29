@@ -5,15 +5,15 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
-import NoiseMakers.NoiseMaker;
-import NoiseMakers.AvolioNoiseMaker;
-import NoiseMakers.NoiseMaker2D;
+import NoiseMakers.ContinuousNoiseMaker;
+import NoiseMakers.VariableOctaveSpectralSynthesisNoiseMaker;
+import NoiseMakers.ContinuousNoiseMaker2D;
 
 @SuppressWarnings("serial")
 public class SwitchableNoisePanel extends NoisePanel {
 	private boolean is2D;
-	private NoiseMaker n1;
-	private NoiseMaker2D n2;
+	private ContinuousNoiseMaker n1;
+	private ContinuousNoiseMaker2D n2;
 	private double xScale,yScale,yScale1D;
 	private int xRange,yRange;
 	private Image image;
@@ -44,13 +44,13 @@ public class SwitchableNoisePanel extends NoisePanel {
 		image=refreshImage();
 	}
 	
-	public void setNoiseMaker(NoiseMaker n) {
+	public void setNoiseMaker(ContinuousNoiseMaker n) {
 		n1=n;
 		is2D=false;
 		image=refreshImage();
 	}
 	
-	public void setNoiseMaker(NoiseMaker2D n) {
+	public void setNoiseMaker(ContinuousNoiseMaker2D n) {
 		n2=n;
 		is2D=true;
 		image=refreshImage();
@@ -68,11 +68,11 @@ public class SwitchableNoisePanel extends NoisePanel {
 					g.drawLine(x,(int) (n1.get(x*xScale)*yScale1D/yScale),x+1,(int) (n1.get((x+1)*xScale)*yScale1D/yScale));
 					g.drawLine(x,(int) (n1.get(x*xScale)*yScale1D/yScale),x-1,(int) (n1.get((x-1)*xScale)*yScale1D/yScale));
 				}
-				if (n1 instanceof AvolioNoiseMaker) {
+				if (n1 instanceof VariableOctaveSpectralSynthesisNoiseMaker) {
 					g.setColor(Color.GREEN);
 					for (int x=1;x<w-1;x++) {
-						g.drawLine(x,(int) (((AvolioNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x+1,(int) (((AvolioNoiseMaker) n1).getDepth((x+1)*xScale)*yScale1D/yScale));
-						g.drawLine(x,(int) (((AvolioNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x-1,(int) (((AvolioNoiseMaker) n1).getDepth((x-1)*xScale)*yScale1D/yScale));
+						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x+1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth((x+1)*xScale)*yScale1D/yScale));
+						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x-1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth((x-1)*xScale)*yScale1D/yScale));
 					}
 				}
 			}

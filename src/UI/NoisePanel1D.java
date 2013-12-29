@@ -2,15 +2,17 @@ package UI;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import NoiseMakers.NoiseMaker;
+import NoiseMakers.ContinuousNoiseMaker;
+
+;
 
 @SuppressWarnings("serial")
 @Deprecated
 public class NoisePanel1D extends NoisePanel {
-	protected NoiseMaker n;
+	protected ContinuousNoiseMaker n;
 	protected double xScale,yScale;
 	
-	public NoisePanel1D(NoiseMaker n,int width,int height,int range) {
+	public NoisePanel1D(ContinuousNoiseMaker n,int width,int height,int range) {
 		super(width,height);
 		this.n=n;
 		xScale=1.*range/w; //Units per pixel

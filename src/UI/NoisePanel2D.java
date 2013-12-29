@@ -2,16 +2,16 @@ package UI;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import NoiseMakers.NoiseMaker2D;
+import NoiseMakers.ContinuousNoiseMaker2D;
 
 @SuppressWarnings("serial")
 @Deprecated
 public class NoisePanel2D extends NoisePanel {
-	protected NoiseMaker2D n;
+	protected ContinuousNoiseMaker2D n;
 	protected int xRange,yRange;
 	protected double xScale,yScale;
 	
-	public NoisePanel2D(NoiseMaker2D n,int width,int height,int xRange,int yRange) {
+	public NoisePanel2D(ContinuousNoiseMaker2D n,int width,int height,int xRange,int yRange) {
 		super(width,height);
 		this.n=n;
 		this.xRange=xRange;

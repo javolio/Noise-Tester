@@ -1,12 +1,12 @@
 package UI;
 
-import NoiseMakers.NoiseMaker2D;
+import NoiseMakers.ContinuousNoiseMaker2D;
 
 @SuppressWarnings("serial")
 public class NoiseMaker2DButton extends NoiseMakerButton {
-	protected NoiseMaker2D n;
+	protected ContinuousNoiseMaker2D n;
 	
-	public NoiseMaker2DButton(String label,NoiseMaker2D n) {
+	public NoiseMaker2DButton(String label,ContinuousNoiseMaker2D n) {
 		super(label);
 		this.n=n;
 	}
