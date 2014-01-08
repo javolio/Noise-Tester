@@ -9,6 +9,11 @@ import NoiseMakers.ContinuousNoiseMaker;
 import NoiseMakers.VariableOctaveSpectralSynthesisNoiseMaker;
 import NoiseMakers.ContinuousNoiseMaker2D;
 
+/**
+ * A panel for displaying a {@link ContinuousNoiseMaker} or {@link ContinuousNoiseMaker2D}.
+ * 
+ * @author Joseph Avolio
+ */
 @SuppressWarnings("serial")
 public class SwitchableNoisePanel extends NoisePanel {
 	private boolean is2D;
@@ -18,6 +23,14 @@ public class SwitchableNoisePanel extends NoisePanel {
 	private int xRange,yRange;
 	private Image image;
 	
+	/**
+	 * Creates a panel instance with a given size
+	 * 
+	 * @param width The width of the display in pixels
+	 * @param height The height of the display in pixels
+	 * @param xRange The horizontal range for the noise function
+	 * @param yRange The vertical range for the noise function
+	 */
 	public SwitchableNoisePanel(int width,int height,int xRange,int yRange) {
 		super(width,height);
 		is2D=false;
@@ -32,31 +45,56 @@ public class SwitchableNoisePanel extends NoisePanel {
 		page.drawImage(image,0,0,null);
 	}
 	
+	/**
+	 * Sets the horizontal range and refreshes the image
+	 * 
+	 * @param range The horizontal range for the noise function
+	 */
 	public void setXRange(int range) {
 		xRange=range;
 		xScale=1.*xRange/w;
 		image=refreshImage();
 	}
 	
+	/**
+	 * Sets the vertical range and refreshes the image
+	 * 
+	 * @param range The vertical range for the noise function
+	 */
 	public void setYRange(int range) {
 		yRange=range;
 		yScale=1.*yRange/h;
 		image=refreshImage();
 	}
 	
+	/**
+	 * Sets the NoiseMaker and refreshes the image
+	 * 
+	 * @param n The new {@link ContinuousNoiseMaker}
+	 */
 	public void setNoiseMaker(ContinuousNoiseMaker n) {
 		n1=n;
 		is2D=false;
 		image=refreshImage();
 	}
 	
+	/**
+	 * Sets the NoiseMaker and refreshes the image
+	 * 
+	 * @param n The new {@link ContinuousNoiseMaker2D}
+	 */
 	public void setNoiseMaker(ContinuousNoiseMaker2D n) {
 		n2=n;
 		is2D=true;
 		image=refreshImage();
 	}
 	
-	public Image refreshImage() {
+	/**
+	 * Generate a new image for the current noise function at the proper range
+	 * 
+	 * @return The new image
+	 */
+	private Image refreshImage() {
 		if (!is2D) { //1-Dimensional
 			BufferedImage i=new BufferedImage(w,h,BufferedImage.TYPE_INT_ARGB);
 			Graphics g=i.createGraphics();
@@ -71,8 +109,8 @@ public class SwitchableNoisePanel extends NoisePanel {
 				if (n1 instanceof VariableOctaveSpectralSynthesisNoiseMaker) {
 					g.setColor(Color.GREEN);
 					for (int x=1;x<w-1;x++) {
-						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x+1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth((x+1)*xScale)*yScale1D/yScale));
-						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth(x*xScale)*yScale1D/yScale),x-1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getDepth((x-1)*xScale)*yScale1D/yScale));
+						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves(x*xScale)*yScale1D/yScale),x+1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves((x+1)*xScale)*yScale1D/yScale));
+						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves(x*xScale)*yScale1D/yScale),x-1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves((x-1)*xScale)*yScale1D/yScale));
 					}
 				}
 			}

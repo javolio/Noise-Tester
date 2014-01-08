@@ -1,10 +1,21 @@
 package NoiseMakers;
 
+/**
+ * Uses a {@link ContinuousNoiseMaker2D} and recursively sums compressed copies to generate noise over a continuous 2D domain. Cannot handle non-integer octave counts.
+ * 
+ * @author Joseph Avolio
+ */
 public class SpectralSynthesisNoiseMaker2D implements ContinuousNoiseMaker2D {
 	ContinuousNoiseMaker2D continuousNoise;
 	protected int d;
 	protected double scale;
 	
+	/**
+	 * Creates a noise instance
+	 * 
+	 * @param continuousNoise The {@link ContinuousNoiseMaker} for spectral synthesis
+	 * @param octaves The number of octaves to layer
+	 */
 	public SpectralSynthesisNoiseMaker2D(ContinuousNoiseMaker2D continuousNoise,int depth) {
 		this.continuousNoise=continuousNoise;
 		d=depth;
