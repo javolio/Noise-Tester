@@ -42,7 +42,7 @@ public class VariableOctaveSpectralSynthesisNoiseMaker2D implements ContinuousNo
 	 * 
 	 * @param x The x coordinate of the position
 	 * @param y The y coordinate of the position
-	 * @return The number of octaves at at (x, y)
+	 * @return The number of octaves at (x, y)
 	 */
 	public double getOctaves(double x,double y) {
 		return octaveNoise.get(x/stretch,y/stretch)*(m-1)+1; // [1, m]

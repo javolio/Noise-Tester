@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import NoiseMakers.ContinuousNoiseMaker;
+import NoiseMakers.TurbulenceNoiseMaker;
 import NoiseMakers.VariableOctaveSpectralSynthesisNoiseMaker;
 import NoiseMakers.ContinuousNoiseMaker2D;
 
@@ -111,6 +112,12 @@ public class SwitchableNoisePanel extends NoisePanel {
 					for (int x=1;x<w-1;x++) {
 						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves(x*xScale)*yScale1D/yScale),x+1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves((x+1)*xScale)*yScale1D/yScale));
 						g.drawLine(x,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves(x*xScale)*yScale1D/yScale),x-1,(int) (((VariableOctaveSpectralSynthesisNoiseMaker) n1).getOctaves((x-1)*xScale)*yScale1D/yScale));
+					}
+				} else if (n1 instanceof TurbulenceNoiseMaker) {
+					g.setColor(Color.GREEN);
+					for (int x=1;x<w-1;x++) {
+						g.drawLine(x,(int) (((TurbulenceNoiseMaker) n1).getXShift(x*xScale)*yScale1D/yScale),x+1,(int) (((TurbulenceNoiseMaker) n1).getXShift((x+1)*xScale)*yScale1D/yScale));
+						g.drawLine(x,(int) (((TurbulenceNoiseMaker) n1).getXShift(x*xScale)*yScale1D/yScale),x-1,(int) (((TurbulenceNoiseMaker) n1).getXShift((x-1)*xScale)*yScale1D/yScale));
 					}
 				}
 			}
